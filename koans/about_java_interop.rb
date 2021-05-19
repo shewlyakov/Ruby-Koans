@@ -5,7 +5,7 @@ include Java
 # Concepts
 # * Pull in a java class
 # * calling a method, Camel vs snake
-# * Resolving module/class name conflicts
+# * Resovling module/class name conflicts
 # * Showing what gets returned
 # * Ruby Strings  VS Java Strings
 # * Calling custom java class
@@ -135,3 +135,4 @@ class AboutJavaInterop < Neo::Koan
   end
 
 end
+

@@ -14,7 +14,21 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+
+  raise TriangleError if [a,b,c].min<=0
+  k,l,m = [a,b,c].sort
+  raise TriangleError if k+l<=m
+
+  if(a==b && b==c && a==c)
+    res = :equilateral
+  end
+  if((a==b && b!=c && a!=c) || (a!=b && b!=c && a==c) || (a!=b && b==c && a!=c))
+    res = :isosceles
+  end
+  if(a!=b && b!=c && a!=c)
+    res = :scalene
+  end
+  return res;
 end
 
 # Error class used in part 2.  No need to change this code.
