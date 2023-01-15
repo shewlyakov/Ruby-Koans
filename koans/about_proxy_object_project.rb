@@ -1,34 +1,30 @@
 require File.expand_path(File.dirname(__FILE__) + '/neo')
 
-# Project: Create a Proxy Class
-#
-# In this assignment, create a proxy class (one is started for you
-# below).  You should be able to initialize the proxy object with any
-# object.  Any messages sent to the proxy object should be forwarded
-# to the target object.  As each message is sent, the proxy should
-# record the name of the method sent.
-#
-# The proxy class is started for you.  You will need to add a method
-# missing handler and any other supporting methods.  The specification
-# of the Proxy class is given in the AboutProxyObjectProject koan.
-
 class Proxy
+  attr_reader :messages
+
   def initialize(target_object)
     @object = target_object
-    # ADD MORE CODE HERE
+    @messages = []
   end
 
-  # WRITE CODE HERE
+  def called?(msg)
+    @messages.include?(msg)
+  end
+
+  def number_of_times_called(msg)
+  	@messages.count(msg)
+  end
+
+	def method_missing(method_name, *args, &block)
+  	@messages << method_name
+  	@object.send(method_name, *args, &block)
+	end
 end
 
-# The proxy object should pass the following Koan:
-#
 class AboutProxyObjectProject < Neo::Koan
   def test_proxy_method_returns_wrapped_object
-    # NOTE: The Television class is defined below
     tv = Proxy.new(Television.new)
-
-    # HINT: Proxy class is defined above, may need tweaking...
 
     assert tv.instance_of?(Proxy)
   end
@@ -93,12 +89,8 @@ class AboutProxyObjectProject < Neo::Koan
   end
 end
 
-
 # ====================================================================
-# The following code is to support the testing of the Proxy class.  No
-# changes should be necessary to anything below this comment.
 
-# Example class using in the proxy testing above.
 class Television
   attr_accessor :channel
 
@@ -115,7 +107,6 @@ class Television
   end
 end
 
-# Tests for the Television class.  All of theses tests should pass.
 class TelevisionTest < Neo::Koan
   def test_it_turns_on
     tv = Television.new
